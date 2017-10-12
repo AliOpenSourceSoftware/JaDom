@@ -20,5 +20,7 @@ Here is some of the features currently  in works
  - code builders to quicky produce dynamic navigation
  - Maven JaDom template for easy depolyment and quicker development
  
+ ## Documentation
  We hope to make documentation availble soon for the JaDom library, however, due to ongoing changes and imporvements, it is more likely documentation will be made a few days before the release of version Aplha 0.0.0
- <b>JaDom Alpha is being pushed into the Alpha build in on December 06, 2017</b>
+
+<b>JaDom Alpha is being pushed into the Alpha build in on December 06, 2017</b>
