@@ -1,5 +1,6 @@
-package com.ali.jadom.dom;
+package com.ali.jadom;
  
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+import com.ali.jadom.dom.Abbr;
+import com.ali.jadom.dom.DOMelement;
+import com.ali.jadom.dom.IDOMelement;
 import com.ali.jadom.javascript.EventListener;
 import com.ali.jadom.javascript.EventListenerInterface; 
  
@@ -37,13 +41,16 @@ public class ApplicationManager implements Serializable {
 	/** Specifies the default language for the document object **/
 	public static final String DEFAULT_HTML_LANG = "en";
 	/** Species an attribute not to be processed **/
-	public static final String FORCE_NO_ATTRIBUTE = "FORCE_NO_ATTRIBUTE";
 	public static final boolean FORCE_HTML_COMPLIANCE = true;
-	public static final String NULL_NODE_VALUE = "nullnodevalue";
 	public static final boolean JAVASCRIPT_CONDENSE = false;
 	public static final Boolean FORCE_LIST_VALUES = false; 
-	public static final String EVENT_LISTENER_NAME_PLACEHOLDER = "eventListenerNamePlaceHolder";
 	public static final boolean HTML_CONDENSE = false; 
+	
+	public static final String FORCE_NO_ATTRIBUTE = "FORCE_NO_ATTRIBUTE";
+	public static final String NULL_NODE_VALUE = "nullnodevalue";
+	public static final String EVENT_LISTENER_NAME_PLACEHOLDER = "eventListenerNamePlaceHolder";
+	public static final String BASIC_OPEN_TAG ="<%s>";
+	public static final String BASIC_CLOSE_TAG ="</%s>";
 
 	public static final String HTML="html";
 	public static final String STRING_DOMCLASS="domClass"; 
@@ -55,7 +62,7 @@ public class ApplicationManager implements Serializable {
 	public static final String STRING_NAME = "name";
 	public static final String STRING_TARGET ="target";
 	public static final String STRING_TITLE ="title"; 
-	public static final String STRING_NEWLINE = "\n";
+	public static final String STRING_NEWLINE = "\r\n";
 	public static final String STRING_ADDRESS_SEPERATOR = ", "; 
 	public static final String STRING_ALT = "alt";
 	public static final String STRING_SHAPE = "shape";
@@ -71,7 +78,31 @@ public class ApplicationManager implements Serializable {
 	public static final String STRING_SPACE =" ";
 	public static final String STRING_DBLSPACE ="  ";
 	public static final String STRING_CANVAS_NOT_SUPPORTED= "Canvas is not supported by your browser";
-	protected static String PATH_JADOM_SCRIPTS = "scripts";
+	public static final String STRING_EMPTY = "";
+	public static final String STRING_CROSSORIGIN = "crossorgin";
+	public static final String STRING_MEDIA = "media";
+	public static final String STRING_SIZE = "size";
+	public static final String STRING_ISMAP = "ismap";
+	public static final String STRING_USEMAP = "usemap";
+	public static final String String_HTTPEQUIV = "httpequiv";
+	public static final String STRING_CHARSET = "charset";
+	public static final String STRING_CONTENT = "content";
+	public static final String STRING_DOUBLE_UNDERSCORE = "__";
+	public static final String STRING_UNDERSCORE = "_";
+	public static final String STRING_HYPHEN = "-"; 
+	public static final String STRING_PERIOD = ".";
+	public static final String EXTENSTION_JADOM_HTML = ".jadom.html";
+	public static final String EXTENSTION_JADOM_CAROUSEL_DEFAULT_CSS = ".jadom.carousel.default.css";
+	public static final String EXTENSTION_JADOM_JS = ".jadom.js";
+	public static final String EXTENSTION_JADOM_CLASSES = ".jadom.classes";
+	public static final String STRING_SRCSET = "srcset";
+	public static final String STRING_FULLWIDTH = "fullwidth";
+	public static final String STRING_ROLE = "role";
+	
+
+	public static String RESOURCES_CSS ="resources".concat(String.valueOf(File.separatorChar)).concat("css").concat(String.valueOf(File.separatorChar)).trim(); 
+	public static String RESOURCES_JS = "resources".concat(String.valueOf(File.separatorChar)).concat("js").concat(String.valueOf(File.separatorChar)).trim(); 
+	public static String PATH_JADOM_SCRIPTS = "resources".concat(String.valueOf(File.separatorChar)).concat("scripts"); 
 	 
 	private static ArrayList<String> autoIds =  null;
 	private static ArrayList<String> autoFunctionName = null;
@@ -94,7 +125,7 @@ public class ApplicationManager implements Serializable {
 	}
 
 	public static void setScriptPath(String path){
-		PATH_JADOM_SCRIPTS = path;
+		 PATH_JADOM_SCRIPTS = path;
 	}
 	public static String getScriptPath(){
 		return PATH_JADOM_SCRIPTS;
@@ -147,8 +178,8 @@ public class ApplicationManager implements Serializable {
 	 * @see com.ali.jadom.javascript.EventListener
 	 */
 	public static void addEventListeners(IDOMelement element, String sessionId){
-		if(((DOMelement)element).eventListerners!=null){
-			for(EventListenerInterface  eve :((DOMelement)element).eventListerners){
+		if(((DOMelement)element).getEventListerners()!=null){
+			for(EventListenerInterface  eve :((DOMelement)element).getEventListerners()){
 				addEventListener((EventListener)eve,sessionId); 
 			}
 		}
@@ -232,8 +263,8 @@ public class ApplicationManager implements Serializable {
 	 */
 	public static void removeEventListeners(DOMelement domElement, String sessionId){
 		if(eventListeners.containsKey(sessionId)){
-			if( domElement.eventListerners!=null){
-				for(EventListener eve:((DOMelement)domElement).eventListerners){
+			if( domElement.getEventListerners()!=null){
+				for(EventListener eve:((DOMelement)domElement).getEventListerners()){
 					removeEventListener(eve,sessionId);
 				}
 			}

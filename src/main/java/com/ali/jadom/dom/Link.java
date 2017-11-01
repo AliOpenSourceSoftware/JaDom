@@ -2,14 +2,20 @@ package com.ali.jadom.dom;
 
 import java.util.HashMap;
 
+import com.ali.jadom.ApplicationManager;
 import com.ali.jadom.dom.superelements.FlowingContent;
 import com.ali.jadom.dom.superelements.MetadataContent;
 import com.ali.jadom.dom.superelements.PhrasingContent; 
 
+/**
+ * Html link class
+ * @author Aaron Ali 
+ */
 @Tag("link") 
 public class Link extends DOMelement  implements MetadataContent, FlowingContent, PhrasingContent{
-  
-	private static final long serialVersionUID = -7291512713103019496L;
+   
+   
+	private static final long serialVersionUID = -2550311026984548961L;
 	protected String href;
 	protected boolean newTab = false;
 	protected boolean isExternal = false;
@@ -24,7 +30,8 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	protected String title;
 	
 	/**
-	 * Creates a &ltlink&gt tag with the given resources
+	 * Creates a &ltlink&gt tag with the given resources 
+	 * 
 	 * @param href
 	 * @param newTab
 	 * @param isExternal
@@ -39,38 +46,34 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public Link(String href, boolean newTab, boolean isExternal, String crossorgin, String hreflang,
 			String size, MediaTypesEnum media, RelTypeEnum rel, String type, boolean ismap, String usemap) {
-		super(tag(Img.class), "nullnodevalue");
+		super(tag(Link.class), ApplicationManager.NULL_NODE_VALUE);
 		this.href = href;
-		this.newTab = newTab;
-		this.isExternal = isExternal;
-		if(newTab && !isExternal)
-			addAttribute("href",href);
-		else
-			addAttribute("href","Link?page="+href);
-		this.crossorgin = crossorgin;
+		this.addAttribute(ApplicationManager.STRING_HREF, href);
+		this.newTab = newTab; 
+ 		this.crossorgin = crossorgin;
 		if(crossorgin!=null)
-			addAttribute("crossorgin",crossorgin);
+			addAttribute(ApplicationManager.STRING_CROSSORIGIN,crossorgin);
 		this.size = size;
 		if(size!=null)
-			addAttribute("size",size);
+			addAttribute(ApplicationManager.STRING_SIZE,size);
 		this.media = media;
 		if(media!=null) 
-			this.media = Enum.valueOf(MediaTypesEnum.class,attributes.get("media"));
+			this.media = Enum.valueOf(MediaTypesEnum.class,attributes.get(ApplicationManager.STRING_MEDIA));
 		this.ismap = ismap;
 		if(ismap)
-			addAttribute("ismap",String.valueOf(ismap));
+			addAttribute(ApplicationManager.STRING_ISMAP,String.valueOf(ismap));
 		this.usemap = usemap;
 		if(usemap!=null)
-			addAttribute("usemap",usemap); 
+			addAttribute(ApplicationManager.STRING_USEMAP,usemap); 
 		this.hreflang = hreflang;
 		if(hreflang!=null)
-			addAttribute("hreflang",hreflang); 
+			addAttribute(ApplicationManager.STRING_HREFLANG,hreflang); 
 		this.rel =rel;
 		if(rel!=null)
-			addAttribute("rel",rel.toString());
+			addAttribute(ApplicationManager.STRING_REL,rel.toString());
 		this.type =type;
 		if(type!=null)
-			addAttribute("type",type);
+			addAttribute(ApplicationManager.STRING_TYPE,type);
 		this.forceNoId();
 	}
 
@@ -101,31 +104,32 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 * @param attributes
 	 */
 	public Link( String href, boolean isExternal, HashMap<String, String> attributes) {
-		super(tag(Link.class), "nullnodevalue", attributes); 
+		super(tag(Link.class), ApplicationManager.NULL_NODE_VALUE, attributes); 
 		this.isExternal = isExternal;
 		this.attributes = attributes;
 		this.href = href;
+		this.addAttribute(ApplicationManager.STRING_HREF, href);
 		if(attributes!=null){
-			if(attributes.get("hreflang")!=null)
-				this.hreflang = attributes.get("hreflang"); 
-			if(attributes.get("crossorgin")!=null)
-				this.crossorgin = attributes.get("crossorgin"); 
-			if(attributes.get("rel")!=null)
-				this.rel = Enum.valueOf(RelTypeEnum.class, attributes.get("rel"));
-			if(attributes.get("media")!=null)
-				this.media = Enum.valueOf(MediaTypesEnum.class,attributes.get("media"));
-			if(attributes.get("size")!=null)
-				this.type = attributes.get("size");  
-			if(attributes.get("usemap")!=null)
-				this.usemap = attributes.get("usemap"); 
-			if(attributes.get("ismap")!=null)
-				this.ismap = Boolean.valueOf(attributes.get("ismap"));
+			if(attributes.get(ApplicationManager.STRING_HREFLANG)!=null)
+				this.hreflang = attributes.get(ApplicationManager.STRING_HREFLANG); 
+			if(attributes.get(ApplicationManager.STRING_CROSSORIGIN)!=null)
+				this.crossorgin = attributes.get(ApplicationManager.STRING_CROSSORIGIN); 
+			if(attributes.get(ApplicationManager.STRING_REL)!=null)
+				this.rel = Enum.valueOf(RelTypeEnum.class, attributes.get(ApplicationManager.STRING_REL));
+			if(attributes.get(ApplicationManager.STRING_MEDIA)!=null)
+				this.media = Enum.valueOf(MediaTypesEnum.class,attributes.get(ApplicationManager.STRING_MEDIA));
+			if(attributes.get(ApplicationManager.STRING_SIZE)!=null)
+				this.type = attributes.get(ApplicationManager.STRING_SIZE);  
+			if(attributes.get(ApplicationManager.STRING_USEMAP)!=null)
+				this.usemap = attributes.get(ApplicationManager.STRING_USEMAP); 
+			if(attributes.get(ApplicationManager.STRING_ISMAP)!=null)
+				this.ismap = Boolean.valueOf(attributes.get(ApplicationManager.STRING_ISMAP));
 			if(attributes.get("size")!=null)
 				this.size = attributes.get("size");
-			if(attributes.get("type")!=null)
-				this.size = attributes.get("type");
+			if(attributes.get(ApplicationManager.STRING_TYPE)!=null)
+				this.size = attributes.get(ApplicationManager.STRING_TYPE);
 		}
-		this.addAttribute("href",(isExternal)? href: "Link?page="+href);  
+		this.addAttribute(ApplicationManager.STRING_HREF,href);  
 		this.forceNoId();
 	}
 	 
@@ -136,13 +140,13 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 * @param isExternal
 	 */
 	public Link( String href,String type, boolean isExternal) {
-		super(tag(Link.class), "nullnodevalue");
-		this.href = href;
+		super(tag(Link.class), ApplicationManager.NULL_NODE_VALUE); 
+		this.setHref(href);
 		this.isExternal = isExternal;
-		this.addAttribute("href",(!isExternal)? href: "Link?page="+href);
+		this.addAttribute(ApplicationManager.STRING_HREF, href);
 		this.type =type;
 		if(type!=null)
-			addAttribute("type", type);
+			addAttribute(ApplicationManager.STRING_TYPE, type);
 		this.forceNoId();
 	}
 
@@ -158,13 +162,14 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 * @param jsCallout
 	 */
 	public Link(String href,boolean isExternal, String type, String id, String domClass, String Styles, String jsCallout) {
-		super(tag(Link.class), "nullnodevalue", (id!=null)?id:ApplicationManager.getNextId(), domClass, Styles, jsCallout); 
+		super(tag(Link.class), ApplicationManager.NULL_NODE_VALUE, (id!=null)?id:ApplicationManager.getNextId(), domClass, Styles, jsCallout); 
 		this.href =href; 
+		this.setHref(href);
 		this.isExternal = isExternal;
-		this.addAttribute("href",(isExternal)? href: "Link?page="+href);
+		this.addAttribute(ApplicationManager.STRING_HREF,href);
 		this.type =type;
 		if(type!=null)
-			addAttribute("type", type);
+			addAttribute(ApplicationManager.STRING_TYPE, type);
 		this.forceNoId();
 	}
 
@@ -182,11 +187,8 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 * @param href
 	 */
 	public final void setHref(String href) {
-		this.href = href;
-		if(this.isExternal)
-			addAttribute("href",href);
-		else
-			addAttribute("hred","Link?page="+href);
+		this.href = href; 
+		addAttribute(ApplicationManager.STRING_HREF,href); 
 	}
 
 	/**
@@ -203,14 +205,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 * @param isExternal
 	 */
 	public final void setExternal(boolean isExternal) {
-		this.isExternal = isExternal;
-		if(isExternal){
-			href  = href.replace("Link?page=", "");
-			addAttribute("href",href);
-		}else{
-			if(!href.contains("Link?page="))
-				href.replace("Link?page=", "");
-		}
+		this.isExternal = isExternal; 
 	}
 
 	/**
@@ -227,7 +222,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setCrossorgin (String crossorgin ) {
 		this.crossorgin  = crossorgin ;
-		addAttribute("crossorgin ",crossorgin );
+		addAttribute(ApplicationManager.STRING_CROSSORIGIN,crossorgin );
 	}
 
 	/**
@@ -246,7 +241,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setRel(RelTypeEnum rel) {
 		this.rel = rel;
-		addAttribute("rel",rel.toString());
+		addAttribute(ApplicationManager.STRING_REL,rel.toString());
 	}
 
 	/**
@@ -265,7 +260,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setMedia(MediaTypesEnum media) {
 		this.media = media;
-		addAttribute("media", media.toString());
+		addAttribute(ApplicationManager.STRING_MEDIA, media.toString());
 	}
 
 	 /***
@@ -282,7 +277,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setType(String type) {
 		this.type = type;
-		addAttribute("type",type.toString());
+		addAttribute(ApplicationManager.STRING_TYPE,type.toString());
 	}
   
 	/**
@@ -300,7 +295,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setIsmap(boolean ismap) {
 		this.ismap = ismap; 
-		addAttribute("ismap", String.valueOf(ismap));
+		addAttribute(ApplicationManager.STRING_ISMAP, String.valueOf(ismap));
 	}
 
 
@@ -319,7 +314,7 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 	 */
 	public final void setHreflang(String hreflang) {
 		this.hreflang = hreflang;
-		addAttribute("hreflang",hreflang);
+		addAttribute(ApplicationManager.STRING_HREFLANG,hreflang);
 	} 
 	
 	/**
@@ -341,13 +336,22 @@ public class Link extends DOMelement  implements MetadataContent, FlowingContent
 
 	@Override
 	public String toString(){ 
-		return "\n"+super.toString();  
+		return ApplicationManager.STRING_NEWLINE.concat(super.toString());  
 	} 
 
 	@Override
 	public boolean addDomElement(DOMelement element){
 		if(ApplicationManager.FORCE_HTML_COMPLIANCE )
-			throw new RuntimeException(this.getClass().getCanonicalName().concat(" is not allowed to have a child element").concat("\n Set ApplicationManager.FORCE_HTML_COMPLIANCE to false to override"));
+			super.throwComplianceError(this, element);
 		return super.addDomElement(element);
+	}
+	
+	/**
+	 * Returns a basic style sheet link for addind styles to your html
+	 * @param filename
+	 * @return
+	 */
+	public static Link createStyleLink(String filename) {
+			return new Link(filename, false, false, null, null, null, null,  RelTypeEnum.STYLESHEET, null, false, null);	    
 	}
 }  
