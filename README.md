@@ -23,4 +23,8 @@ Here is some of the features currently  in works
  ## Documentation
  We hope to make documentation availble soon for the JaDom library, however, due to ongoing changes and imporvements, it is more likely documentation will be made a few days before the release of version Aplha 0.0.0
 
-<b>JaDom Alpha is being pushed into the Alpha build in on December 06, 2017</b>
+<b><strike>JaDom Alpha is being pushed into the Alpha build in on December 06, 2017</strike></b>
+
+Due to unforsen travel and work the date for release has been slightly revised.
+
+<b>JaDom Alpha is being pushed into the Alpha build in on Jan 06, 2017</b>
